@@ -1,0 +1,45 @@
+#background-video {
+  height: 100vh;
+  width: 100vw;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+#icon{
+  col-md-4or:  red;
+}
+
+input{
+  margin: auto;
+}
+select{
+  margin: auto;
+}
+a:hover{
+  font-weight: bold;
+}
+h1{
+  font-style: italic;
+  color: white;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+#head_button,
+#result-card{
+  border-top-left-radius: 35px;
+  border-top-right-radius: 35px;
+  border-bottom-left-radius: 35px;
+  border-bottom-right-radius: 35px;
+}
+#head_button{
+  border: none;
+}
+.links{
+  border:  none;
+  text-decoration: none;
+  border-radius: 12px;
+}

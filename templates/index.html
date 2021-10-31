@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Heart Disease Detection</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!-- Adding Css -->
+	<link href="{{ url_for('static', filename='styles.css') }}" rel='stylesheet' type='text/css' />
+	<style type="text/css">
+		select{
+			  margin: auto;
+		}	
+	</style>
+</head>
+
+<body>
+	<video id="background-video" autoplay loop muted>
+  		<source src="{{ url_for('static', filename='back_vid2.mp4') }}" type="video/mp4">
+	</video>
+	<!-- Navigation Bar start -->
+	<nav class="navbar navbar-expand-lg">
+	  <a class="navbar-brand font-weight-bold" href="/"><i class="fas fa-heartbeat" ></i> Heart Disease</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon text-light">=</span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active text-warning" href="/">Home</a>
+	      <a class="nav-item nav-link text-light" data-toggle="modal" data-target=".fade">About</a>
+	    </div>
+	  </div>
+	</nav>
+	<!-- Navigation Bar end -->
+	<h1>Heart Disease Detection</h1>
+	<!-- result section start-->
+	{% if name %}
+	<div id="result-card" class="w-50 card mx-auto my-auto bg-dark">
+	    <button id="head_button" class="bg-primary text-light" type="button" onClick="#">	
+	    	<h2>Patient name: {{name}} <h2>
+	    </button>
+	    
+	    <img class="mx-auto" src="{{ url_for('static', filename='heart.png') }}" width="280">
+	    <div class="card-body">
+	        <p class="card-text text-light">
+	        	Based on {{name}}'s data our model accurately predicts the likelyhood whether {{name}} may have heart disease or not.
+	        </p>
+	        
+	        <div class="row">
+	        {% if data == 1 %}
+	        <button class="btn btn-danger mx-auto">
+	        	<i class="fas fa-exclamation-triangle"></i> 
+	        	Patient is <strong>likely</strong> to have a heart disease
+	        </button>
+	        {% else %}
+	        <button class="btn btn-success col-md-44 mx-auto">
+	        	<i class="fas fa-user-shield"></i> 
+	        	Patient is <strong>UN-likely</strong> to have a heart disease
+	    	</button>
+	        {% endif %}
+	        </div>	
+	        
+	    </div>
+	    
+	</div>
+	<!-- result section end-->
+	<!-- Input Form start -->
+	{% else %}
+	<div class="w-50 card mx-auto my-auto" >
+		<div class="collapse" id="collapseExample">
+		  <div class="card card-body bg-dark">
+		    <form  method="POST" action="{{url_for('predict')}}">
+	        	<div class="row mt-2">
+	        		<input class="form-control col-md-4" type="text" name='name' placeholder="Name" required>
+	        		<input class="form-control col-md-4" type="number" name='age' placeholder="Age" required>
+	        	</div>
+	        	<div class="row mt-3">
+	        		<select class="form-control select_menu col-md-4" name='sex' required>
+	        			<option value="">Sex</option>
+						<option value="1">Male</option>
+						<option value="0">Female</option>
+					</select>
+	        		<select class="form-control select_menu col-md-4" name='cp' required>
+	        			<option value="">Chest Pain</option>
+						<option value="0">Typical Angina</option>
+						<option value="1">Atypical Angina</option>
+						<option value="2">Non-anginal pain</option>
+						<option value="3">Asymptomatic</option>
+					</select>
+	        	</div>
+	        	<div class="row mt-3">
+	        		<input class="form-control col-md-4" type="text" name='trestbps' placeholder="Resting Blood Pressure" required>
+	        		<input class="form-control col-md-4" type="text" name='chol' placeholder="Cholesterol Measurement" required> 
+	        	</div>
+	        	<div class="row mt-3">
+	        		<select class="form-control select_menu col-md-4" name='fbs' required>
+	        			<option value="">Fasting Blood Sugar</option>
+						<option value="0">False</option>
+						<option value="1">True</option>
+					</select>
+
+	        		<select class="form-control select_menu col-md-4" name='restecg' required>
+	        			<option value="">Resting EC Measure</option>
+						<option value="0">Normal</option>
+						<option value="1">Abnormal ST-T wave</option>
+						<option value="2">Hypertrophy</option>
+					</select>
+	        	</div>
+
+	        	<div class="row mt-3">
+	        		<input class="form-control col-md-4" type="text" name='thalach' placeholder="Maximum heart rate" required>
+	        		<select class="form-control select_menu col-md-4" name='exang' required>
+	        			<option value="">Exercise induced agina</option>
+						<option value="0">No</option>
+						<option value="1">Yes</option>
+					</select>
+	        	</div>
+	        	<div class="row mt-3">
+	        		<input class="form-control col-md-4" type="text" name='oldpeak' placeholder="Exercise relative to rest" required>
+	        		<select class="form-control select_menu col-md-4" name='slope' required>
+	        			<option value="">Slope</option>
+						<option value="0">Unsloping</option>
+						<option value="1">Flat</option>
+						<option value="2">Downsloping</option>
+					</select>
+	        	</div>
+	        	<div class="row mt-3">
+	        		<select class="form-control select_menu col-md-4" name='ca' required>
+	        			<option value="">Major Blood Vessels</option>
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="2">3</option>
+						<option value="2">4</option>
+					</select>
+	        		<select class="form-control select_menu col-md-4" name='thal' required>
+	        			<option value="">Thalassemia</option>
+						<option value="0">NULL</option>
+						<option value="1">Fixed Defect</option>
+						<option value="2">Normal Blood Flow</option>
+						<option value="2">Reversible Defect</option>
+					</select>
+	        	</div>
+	        	<div class="row mt-3">
+	        		<input type="submit" class="btn btn-primary col-md-44 mx-auto" value="Predict!">
+	        	</div>
+	        </form>
+
+		  </div>
+		</div>
+		 <button class="btn btn-success d-flex justify-content-center" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+		    Show/Hide Form
+		 </button>
+	</div>
+	{% endif %}
+	<!-- Input Form end -->
+	
+	<!-- About Modal start -->
+		<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content bg-dark text-light">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle"><button class="links text-light bg-primary"><h4>About the project</h4></button></h5>
+		        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Heart disease is the leading cause of death in the United States, causing about 1 in 4 deaths. HD detector is a web app which simplifies the process of heart disease detection. The patients records are passed to the program. These details are then passed to classification model which predicts whether a patient has heart disease or not</p>
+		        <br>
+		        
+		        <p><button class="links bg-primary text-light"><h4>Technology used</h4></button></p>
+		        <button class="links text-light bg-info"><i class="fab fa-python" ></i> Python</button>
+		        <button class="links text-light bg-secondary"><i class="fab fa-bootstrap" ></i> Bootstrap</button>
+		        <button class="links text-light bg-danger"><i class="fas fa-flask" ></i> Flask</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- About Modal end -->
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

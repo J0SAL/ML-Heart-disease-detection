@@ -1,0 +1,1 @@
+document.getElementById('background-video').playbackRate = 0.5;
