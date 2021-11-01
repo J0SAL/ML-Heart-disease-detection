@@ -1,5 +1,5 @@
 # Heart-disease-detection
-#### A simple ML  based website which detects the probablity of user having heart disease.
+#### A simple ML  based website which detects the probability  of user having heart disease.
 
 
 ## MOTIVATION 💪
