@@ -1,6 +1,7 @@
 # Heart-disease-detection
 #### A simple ML  based website which detects the probability  of user having heart disease.
 
+Deployed at: https://heart-disease-d.herokuapp.com/
 
 ## MOTIVATION 💪
 - Heart disease is the leading cause of death in the United States, causing about 1 in 4 deaths. 
