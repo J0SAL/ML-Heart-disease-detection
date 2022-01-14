@@ -49,17 +49,6 @@ Deployed at: https://heart-disease-d.herokuapp.com/
 <img src="https://user-images.githubusercontent.com/52382282/139722895-7826aae1-d8f3-4dab-984a-9667608fa53f.png" alt="drawing" width="800"/>
 
 
-## Usage 
-You can use this project for further developing it and adding your work in it. If you use this project, kindly mention the original source of the project and mention the link of this repo in your report.
-
-## Further Improvements 📈
-This was my first project so there are lot of things to improve upon
-
-- CSS code is totally messed up 
-- Frontend can be made more nicer 	
-- More data can be collected manually via web scrapping to make the system more accurate :monocle_face:	
-- Modularized code can be written instead of writing in Jupyter Notebooks 
-
 
 ## Contact 📞
 
